@@ -1,63 +1,76 @@
 <!DOCTYPE html>
-<html lang="en-US">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <title>Miscellaneous | 3kh0</title>
-    <style>
-      .text-center {
-        text-align: center;
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xPage</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f0f0f0;
+      color: #333;
+      padding: 2rem;
+    }
+    label, input, button {
+      display: block;
+      margin: 0.5rem 0;
+    }
+  </style>
+</head>
+<body>
+  <h2>u7 Config Panel</h2>
+
+  <label for="txt1">🧠 Rename Tab:</label>
+  <input type="text" id="txt1" placeholder="New tab title" autocomplete="off">
+
+  <label for="ico1">🔮 Icon URL:</label>
+  <input type="text" id="ico1" placeholder="https://i.img.com/fav.png" autocomplete="off">
+
+  <button onclick="do1()">Update</button>
+
+  <hr>
+
+  <h2>r3 Cloak</h2>
+  <button onclick="openBlnk()">Launch about:blnk</button>
+
+  <hr>
+
+  <h2>v3 Module (ads)</h2>
+  <label for="chk1">
+    <input type="checkbox" id="chk1" onchange="toggleAdz()"> Enable modules
+  </label>
+
+  <div id="adz1" style="display: none; padding: 1rem; border: 1px dashed #888; margin-top: 1rem;">
+    <p>This box simulates a module container. Insert your scripts or content here.</p>
+  </div>
+
+  <script>
+    function do1() {
+      const t = document.getElementById('txt1').value;
+      const i = document.getElementById('ico1').value;
+
+      if (t) document.title = t;
+
+      if (i) {
+        let l = document.querySelector("link[rel~='icon']");
+        if (!l) {
+          l = document.createElement('link');
+          l.rel = 'icon';
+          document.head.appendChild(l);
+        }
+        l.href = i;
       }
-    </style>
-  </head>
-  <body style="background-color: #121212; color: #ffffff; font-family: sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
-    <h2 style="text-align: center; font-size: 2em; margin-bottom: 1em;">Miscellaneous stuff</h2>
-    <div style="width: 100%; max-width: 600px; margin-bottom: 2em;">
-      <div>
-        <h1>about:blnk</h1>
-        <div>
-          <p>Enter a URL you want to be opened in a about:blnk page below:</p>
-          <p><input id="url-target" type="url" pattern="https://.*" placeholder="Enter a website URL" autocomplete="on" style="width: 100%; padding: 10px; border: none; border-radius: 10px; background-color: #2c2c2c; color: #ffffff;" /></p>
-          <p>Note this will not work with some sites, but you can copy the link of this website and put it in for extra privacy.</p>
-        </div>
-      </div>
-      <div style="display: flex; justify-content: space-between; margin-top: 1em;">
-        <button id="create" style="padding: 10px 20px; border: none; border-radius: 10px; background-color: #b625cc; color: #ffffff;">Create page</button>
-      </div>
-    </div>
-    <div style="width: 100%; max-width: 600px;">
-      <div>
-        <h1>Tab Cloaker</h1>
-        <p>Enter a new tab title or a image URL below. What you set will be used on the whole site.</p>
-        <p>
-          <input id="userinput" type="url" placeholder="Enter a title or image URL" autocomplete="on" style="width: 100%; padding: 10px; border: none; border-radius: 10px; background-color: #2c2c2c; color: #ffffff;" />
-        </p>
-        <p id="console-output"></p>
-      </div>
-      <div class="button-wrapper" style="display: flex; justify-content: space-between; margin-top: 1em;">
-        <button onclick="changeTabTitle();" style="padding: 10px 20px; border: none; border-radius: 10px; background-color: #b625cc; color: #ffffff;">Set Title</button>
-        <button onclick="changeTabIcon();" style="padding: 10px 20px; border: none; border-radius: 10px; background-color: #b625cc; color: #ffffff;">Set Icon</button>
-        <button onclick="resetTabSettings();" style="padding: 10px 20px; border: none; border-radius: 10px; background-color: #b625cc; color: #ffffff;">Reset</button>
-      </div>
-    </div>
-    <div style="width: 100%; max-width: 600px; margin-bottom: 2em;">
-      <div>
-        <h1>Ads consent</h1>
-        <div>
-          <p>Sometimes, ads are shown to support the creator, if you would not like to see ads or it slows down your computer too much, you can disable them here.</p>
-          <label for="adConsent">Do not show ads at all:</label>
-          <input type="checkbox" id="adConsent" name="adConsent">
-        </div>
-      </div>
-    </div>
-    <p style="text-align: center; margin-top: 2em;">
-      <a href="/index.html" style="text-decoration: none;">
-        <button style="cursor: pointer; background-color: #22c55e; border: none; color: white; padding: 15px 32px; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 20px; margin-top: 5px;">
-          Go to the homepage
-        </button>
-      </a>
-    </p>
-    <script src="/js/misc.js"></script>
-    <script src="/js/main.js"></script>
-  </body>
+    }
+
+    function openBlnk() {
+      const x = window.open();
+      x.document.write('<script>location.replace("'+location.href+'")<\/script>');
+      x.document.close();
+    }
+
+    function toggleAdz() {
+      const box = document.getElementById('adz1');
+      box.style.display = box.style.display === 'none' ? 'block' : 'none';
+    }
+  </script>
+</body>
 </html>
