@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>xPage</title>
+  <title>Misc Settings</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
@@ -84,7 +84,7 @@
       border-color: #444;
     }
 
-    #adz1 {
+    #adsBox {
       display: none;
       padding: 1rem;
       border: 1px dashed #888;
@@ -109,6 +109,53 @@
       color: #22c55e;
       text-decoration: none;
     }
+
+    /* Toggle Switch Styles */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+      vertical-align: middle;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #6b7280;
+      transition: 0.4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: #ffffff;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #22c55e;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
   </style>
 </head>
 <body>
@@ -117,29 +164,31 @@
     <a href="/"><button>← Home</button></a>
   </div>
 
-  <h2>u7 Config Panel</h2>
+  <h2>Tab Settings</h2>
 
-  <label for="txt1">🧠 Rename Tab:</label>
-  <input type="text" id="txt1" placeholder="New tab title" autocomplete="off">
+  <label for="tabTitle">🧠 Rename Tab:</label>
+  <input type="text" id="tabTitle" placeholder="New tab title" autocomplete="off">
 
-  <label for="ico1">🔮 Icon URL:</label>
-  <input type="text" id="ico1" placeholder="https://i.img.com/fav.png" autocomplete="off">
+  <label for="tabIcon">🔮 Icon URL:</label>
+  <input type="text" id="tabIcon" placeholder="https://i.img.com/fav.png" autocomplete="off">
 
-  <button onclick="do1()">Update</button>
-
-  <hr>
-
-  <h2>r3 Cloak</h2>
-  <button onclick="openBlnk()">Launch about:blnk</button>
+  <button onclick="u7Config.updateTab()">Update</button>
 
   <hr>
 
-  <h2>v3 Module (ads)</h2>
-  <label for="chk1">
-    <input type="checkbox" id="chk1" onchange="toggleAdz()"> Disable ads
+  <h2>Cloaking</h2>
+  <button onclick="u7Config.openBlank()">Launch about:blnk</button>
+
+  <hr>
+
+  <h2>Ads Module</h2>
+  <label class="switch">
+    <input type="checkbox" id="adsToggle" onchange="u7Config.toggleAds()">
+    <span class="slider"></span>
   </label>
+  <span style="margin-left: 10px;">Disable ads</span>
 
-  <div id="adz1">
+  <div id="adsBox">
     <p>This box simulates a module container. Insert your scripts or content here.</p>
   </div>
 
@@ -148,33 +197,35 @@
   </div>
 
   <script>
-    function do1() {
-      const t = document.getElementById('txt1').value;
-      const i = document.getElementById('ico1').value;
+    const u7Config = {
+      updateTab: function() {
+        const title = document.getElementById('tabTitle').value;
+        const icon = document.getElementById('tabIcon').value;
 
-      if (t) document.title = t;
+        if (title) document.title = title;
 
-      if (i) {
-        let l = document.querySelector("link[rel~='icon']");
-        if (!l) {
-          l = document.createElement('link');
-          l.rel = 'icon';
-          document.head.appendChild(l);
+        if (icon) {
+          let link = document.querySelector("link[rel~='icon']");
+          if (!link) {
+            link = document.createElement('link');
+            link.rel = 'icon';
+            document.head.appendChild(link);
+          }
+          link.href = icon;
         }
-        l.href = i;
+      },
+
+      openBlank: function() {
+        const newTab = window.open();
+        newTab.document.write('<script>location.replace("' + location.href + '")<\/script>');
+        newTab.document.close();
+      },
+
+      toggleAds: function() {
+        const adsBox = document.getElementById('adsBox');
+        adsBox.style.display = document.getElementById('adsToggle').checked ? 'none' : 'block';
       }
-    }
-
-    function openBlnk() {
-      const x = window.open();
-      x.document.write('<script>location.replace("'+location.href+'")<\/script>');
-      x.document.close();
-    }
-
-    function toggleAdz() {
-      const box = document.getElementById('adz1');
-      box.style.display = document.getElementById('chk1').checked ? 'none' : 'block';
-    }
+    };
   </script>
 </body>
 </html>
