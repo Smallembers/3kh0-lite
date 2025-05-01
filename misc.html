@@ -93,6 +93,11 @@
       margin-top: 1rem;
     }
 
+    .centered {
+      text-align: center;
+      margin-top: 3em;
+    }
+
     .top-left {
       position: fixed;
       top: 1rem;
@@ -187,13 +192,43 @@
     <p>This box simulates a module container. Insert your scripts or content here.</p>
   </div>
 
+  <div class="centered">
+    <a href="/"><button>← Return to Home</button></a>
+  </div>
+
   <script>
     const u7Config = {
+      // Load settings from localStorage
+      loadSettings: function() {
+        const savedTitle = localStorage.getItem('tabTitle');
+        const savedIcon = localStorage.getItem('tabIcon');
+
+        if (savedTitle) {
+          document.title = savedTitle;
+          document.getElementById('tabTitle').value = savedTitle;
+        }
+
+        if (savedIcon) {
+          let link = document.querySelector("link[rel~='icon']");
+          if (!link) {
+            link = document.createElement('link');
+            link.rel = 'icon';
+            document.head.appendChild(link);
+          }
+          link.href = savedIcon;
+          document.getElementById('tabIcon').value = savedIcon;
+        }
+      },
+
+      // Update settings and save them to localStorage
       updateTab: function() {
         const title = document.getElementById('tabTitle').value;
         const icon = document.getElementById('tabIcon').value;
 
-        if (title) document.title = title;
+        if (title) {
+          document.title = title;
+          localStorage.setItem('tabTitle', title);
+        }
 
         if (icon) {
           let link = document.querySelector("link[rel~='icon']");
@@ -203,6 +238,7 @@
             document.head.appendChild(link);
           }
           link.href = icon;
+          localStorage.setItem('tabIcon', icon);
         }
       },
 
@@ -217,6 +253,9 @@
         adsBox.style.display = document.getElementById('adsToggle').checked ? 'none' : 'block';
       }
     };
+
+    // Load the settings when the page loads
+    window.onload = u7Config.loadSettings;
   </script>
 </body>
 </html>
