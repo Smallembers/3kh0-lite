@@ -6,12 +6,32 @@
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(135deg, #0f0f1f, #1a1a2e);
-      color: #ffffff;
-      padding: 2rem;
+    html, body {
       margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+      height: 100%;
+      background: linear-gradient(-45deg, #0f0f1f, #1a1a2e, #2a0845, #1f2937);
+      background-size: 400% 400%;
+      animation: gradientShift 20s ease infinite;
+      color: #ffffff;
+      overflow-y: auto;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    body {
+      padding: 2rem;
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     h2 {
@@ -31,9 +51,9 @@
     input[type="text"] {
       width: 100%;
       padding: 0.5em;
-      background: #1a1a2e;
+      background: #1f2937;
       color: white;
-      border: 1px solid #333;
+      border: 1px solid #444;
       border-radius: 8px;
       margin-top: 0.3em;
     }
@@ -73,17 +93,30 @@
       margin-top: 1rem;
     }
 
-    a {
-      color: #22c55e;
-    }
-
     .centered {
       text-align: center;
       margin-top: 3em;
     }
+
+    .top-left {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 1000;
+    }
+
+    a {
+      color: #22c55e;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
+  <!-- Top left "Return to Home" -->
+  <div class="top-left">
+    <a href="/"><button>← Home</button></a>
+  </div>
+
   <h2>u7 Config Panel</h2>
 
   <label for="txt1">🧠 Rename Tab:</label>
