@@ -15,19 +15,30 @@
       box-sizing: border-box;
     }
 
-    body {
+    html, body {
       margin: 0;
       padding: 0;
-      background: radial-gradient(ellipse at center, #0f0f1b 0%, #05050d 100%);
-      color: #e0e0ff;
       font-family: "Segoe UI", Roboto, sans-serif;
+      background: #05050d;
+      color: #e0e0ff;
+      overflow: hidden;
+    }
+
+    canvas#bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    body {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
       text-align: center;
-      overflow-x: hidden;
+      padding: 1rem;
     }
 
     h1 {
@@ -67,9 +78,6 @@
       font-size: 1rem;
       border-radius: 9999px;
       margin: 10px;
-      position: relative;
-      z-index: 1;
-      overflow: hidden;
       transition: transform 0.2s ease, box-shadow 0.3s ease;
     }
 
@@ -118,6 +126,8 @@
   </style>
 </head>
 <body>
+  <canvas id="bg"></canvas>
+
   <h1>3kh0 lite</h1>
   <span id="subtitle">Fast. Lightweight. Clean.</span>
 
@@ -131,6 +141,72 @@
     &copy; 3kh0, 2024. Use and/or duplicate content from the <a href="https://github.com/3kh0/3kh0-lite">GitHub repo</a> with proper credit.<br>
     Contact Echo at <a href="mailto:echo-the-coder@tuta.io">echo-the-coder@tuta.io</a>.
   </footer>
+
+  <script>
+    const canvas = document.getElementById("bg");
+    const ctx = canvas.getContext("2d");
+
+    let width, height;
+    let particles = [];
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.7;
+        this.vy = (Math.random() - 0.5) * 0.7;
+        this.size = Math.random() * 2 + 1;
+        this.alpha = Math.random() * 0.5 + 0.3;
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
+          this.reset();
+        }
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(173, 216, 230, ${this.alpha})`;
+        ctx.fill();
+      }
+    }
+
+    function initParticles(count) {
+      particles = [];
+      for (let i = 0; i < count; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      for (const p of particles) {
+        p.update();
+        p.draw();
+      }
+      requestAnimationFrame(animate);
+    }
+
+    initParticles(120);
+    animate();
+  </script>
 
   <script src="/js/main.js"></script>
   <script src="/js/subtitle.js"></script>
