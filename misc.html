@@ -1,148 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Misc Tools</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-
+  <meta charset="UTF-8">
+  <title>xPage</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    html, body {
-      margin: 0;
-      padding: 0;
-      font-family: "Segoe UI", sans-serif;
-      background: #05050d;
-      color: #e0e0ff;
-      overflow: hidden;
-    }
-
-    canvas#bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-
     body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #0f0f1f, #1a1a2e);
+      color: #ffffff;
       padding: 2rem;
-      min-height: 100vh;
+      margin: 0;
     }
 
-    h1, h2 {
-      text-align: center;
-      background: linear-gradient(to right, #0fffc1, #8b5cf6);
+    h2 {
+      background: linear-gradient(to right, #22c55e, #8b5cf6);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      font-size: 1.8em;
+      margin-top: 1.5em;
     }
 
-    .card {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(12px);
-      padding: 2rem;
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.05);
-      max-width: 600px;
-      width: 100%;
-      margin-bottom: 2rem;
-    }
-
-    label, input, button {
+    label {
       display: block;
-      margin: 1rem 0 0.5rem;
-      font-size: 1rem;
+      margin-top: 1em;
+      font-weight: 500;
     }
 
     input[type="text"] {
       width: 100%;
-      padding: 0.5rem;
+      padding: 0.5em;
       background: #1a1a2e;
-      border: 1px solid #444;
-      color: #fff;
+      color: white;
+      border: 1px solid #333;
       border-radius: 8px;
+      margin-top: 0.3em;
+    }
+
+    input[type="checkbox"] {
+      margin-right: 0.5em;
     }
 
     button {
-      background: linear-gradient(135deg, #0fffc1, #3b82f6);
+      margin-top: 1em;
+      background: linear-gradient(to right, #3b82f6, #9333ea);
       border: none;
       color: white;
-      padding: 12px 24px;
-      font-size: 1rem;
+      padding: 0.7em 1.5em;
       border-radius: 9999px;
+      font-size: 1em;
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.3s ease;
-      margin-top: 1rem;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
     button:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 15px #0fffc1aa;
+      box-shadow: 0 0 10px #9333ea88;
     }
 
     hr {
-      border: none;
-      border-top: 1px solid #666;
-      margin: 2rem 0;
-    }
-
-    .checkbox {
-      display: flex;
-      align-items: center;
-      margin-top: 1rem;
-    }
-
-    .checkbox input {
-      margin-right: 0.5rem;
+      margin: 2em 0;
+      border-color: #444;
     }
 
     #adz1 {
       display: none;
       padding: 1rem;
       border: 1px dashed #888;
-      background-color: #1a1a2e;
+      background-color: #111827;
       border-radius: 10px;
       margin-top: 1rem;
+    }
+
+    a {
+      color: #22c55e;
+    }
+
+    .centered {
+      text-align: center;
+      margin-top: 3em;
     }
   </style>
 </head>
 <body>
-  <canvas id="bg"></canvas>
+  <h2>u7 Config Panel</h2>
 
-  <h1>Tools & Config</h1>
+  <label for="txt1">🧠 Rename Tab:</label>
+  <input type="text" id="txt1" placeholder="New tab title" autocomplete="off">
 
-  <div class="card">
-    <h2>🧠 Rename Tab</h2>
-    <label for="txt1">New tab title:</label>
-    <input type="text" id="txt1" placeholder="Enter new title" autocomplete="off" />
+  <label for="ico1">🔮 Icon URL:</label>
+  <input type="text" id="ico1" placeholder="https://i.img.com/fav.png" autocomplete="off">
 
-    <label for="ico1">Favicon URL:</label>
-    <input type="text" id="ico1" placeholder="https://i.imgur.com/favicon.png" autocomplete="off" />
+  <button onclick="do1()">Update</button>
 
-    <button onclick="do1()">Apply Changes</button>
+  <hr>
+
+  <h2>r3 Cloak</h2>
+  <button onclick="openBlnk()">Launch about:blnk</button>
+
+  <hr>
+
+  <h2>v3 Module (ads)</h2>
+  <label for="chk1">
+    <input type="checkbox" id="chk1" onchange="toggleAdz()"> Disable ads
+  </label>
+
+  <div id="adz1">
+    <p>This box simulates a module container. Insert your scripts or content here.</p>
   </div>
 
-  <div class="card">
-    <h2>🔮 Cloak</h2>
-    <button onclick="openBlnk()">Launch about:blnk</button>
-  </div>
-
-  <div class="card">
-    <h2>🧩 Ads Module</h2>
-    <div class="checkbox">
-      <input type="checkbox" id="chk1" onchange="toggleAdz()" />
-      <label for="chk1">Disable ads</label>
-    </div>
-
-    <div id="adz1">
-      <p>This is a simulated ad/module box. You can insert content or scripts here.</p>
-    </div>
+  <div class="centered">
+    <a href="/"><button>← Return to Home</button></a>
   </div>
 
   <script>
@@ -173,59 +142,6 @@
       const box = document.getElementById('adz1');
       box.style.display = document.getElementById('chk1').checked ? 'none' : 'block';
     }
-  </script>
-
-  <script>
-    const canvas = document.getElementById("bg");
-    const ctx = canvas.getContext("2d");
-    let width, height, particles = [];
-
-    function resize() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    }
-
-    window.addEventListener("resize", resize);
-    resize();
-
-    class Particle {
-      constructor() { this.reset(); }
-      reset() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 0.5;
-        this.vy = (Math.random() - 0.5) * 0.5;
-        this.size = Math.random() * 2 + 1;
-        this.alpha = Math.random() * 0.5 + 0.3;
-      }
-      update() {
-        this.x += this.vx; this.y += this.vy;
-        if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) this.reset();
-      }
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(173, 216, 230, ${this.alpha})`;
-        ctx.fill();
-      }
-    }
-
-    function initParticles(count) {
-      particles = [];
-      for (let i = 0; i < count; i++) particles.push(new Particle());
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, width, height);
-      for (const p of particles) {
-        p.update();
-        p.draw();
-      }
-      requestAnimationFrame(animate);
-    }
-
-    initParticles(100);
-    animate();
   </script>
 </body>
 </html>
